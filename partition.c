@@ -27,6 +27,17 @@ PartitionResult knapsack_or_partition(int *weights, int *values, int n, int capa
     PartitionResult result = {.sum1 = 0, .sum2 = 0, .difference = 0};
     memset(dp, 0, sizeof(dp));
 
+    // Calculate total sum for partition problem
+    int total_sum = 0;
+    for (int i = 0; i < n; i++) {
+        total_sum += weights[i];
+    }
+
+    // For partition problem, adjust capacity if needed
+    if (is_partition) {
+        capacity = total_sum / 2;
+    }
+
     // Fill DP table
     for (int i = 1; i <= n; i++)
     {
@@ -59,18 +70,26 @@ PartitionResult knapsack_or_partition(int *weights, int *values, int n, int capa
     }
     else
     {
+        // Find the closest possible subset sum that minimizes the difference
         int closest_sum = 0;
-        for (int w = capacity; w >= 0; w--)
+        int min_difference = total_sum;
+
+        // Try all possible subset sums
+        for (int w = 0; w <= capacity; w++)
         {
             if (dp[n][w])
             {
-                closest_sum = w;
-                break;
+                int current_difference = abs(total_sum - 2 * w);
+                if (current_difference < min_difference)
+                {
+                    min_difference = current_difference;
+                    closest_sum = w;
+                }
             }
         }
 
         result.sum1 = closest_sum;
-        result.sum2 = (capacity * 2 - closest_sum);
+        result.sum2 = total_sum - closest_sum;
         result.difference = abs(result.sum2 - result.sum1);
 
         int used[MAX_ITEMS] = {0};
@@ -98,6 +117,8 @@ PartitionResult knapsack_or_partition(int *weights, int *values, int n, int capa
                 result.subset2[s2_size++] = weights[i]; // This item is added to Subset 2
             }
         }
+        result.subset2_size = s2_size;
+        result.subset1_size = s1_size;
     }
 
     return result;
