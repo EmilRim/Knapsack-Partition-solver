@@ -1,107 +1,114 @@
-# Particijos Sprendimo Modulis
+# 🧩 Partition and Knapsack Problem Solving Module 🎒
 
-## Modulio Aprašymas
+## 🎯 Module Purpose
 
-Šis modulis yra skirtas spręsti du pagrindinius optimizavimo uždavinius:
-1. Daikčių krepšelio (Knapsack) problemą
-2. Skaičių particijos problemą
+This C module is a universal tool solving two complex optimization challenges:
 
-## Failų Formato Reikalavimai
+1. **Partition Problem**: 🔀 Splitting numbers into two most equal groups
+2. **Knapsack Problem**: 🎒 Optimal item selection within limited capacity
 
-### 1. Particijos Problema (Skaičių Padalijimas)
+## 🧠 Problem Description
 
-Failas turi turėti tokią struktūrą:
+### 🔢 Partition Problem
+Given N items with specific weights. Goal: Divide items into two groups with as close weights as possible. 
+
+**Example**: 
+- Input: 🏋️ Items with weights 7, 3, 2, 5, 8, 4
+- Possible Solution: 
+  - 1st Group (14): 7, 3, 4 ⚖️
+  - 2nd Group (15): 2, 5, 8 ⚖️
+- Difference between groups: 1 🎯
+
+### 🎒 Knapsack Problem
+Given N items with weights and values. Goal: Maximize total item value without exceeding backpack capacity.
+
+## 🚀 Module Capabilities
+
+- 🤖 Automatic problem type recognition
+- 💡 Dynamic calculation
+- 📊 Comprehensive result presentation
+- 🔧 Flexible file format support
+
+## 📁 File Format Structure
+
+### 1. 🧩 Partition Problem
 ```
-n           # Elementų skaičius
-w1 w2 w3 ... wn   # Svoriai (sveikieji skaičiai)
-```
-
-Pavyzdys (`testas1.txt`):
-```
-5
-10 20 15 5 25
-```
-
-### 2. Daikčių Krepšelio Problema (Pasirinktinai)
-
-Failas turi turėti tokią struktūrą:
-```
-n           # Elementų skaičius
-w1 w2 w3 ... wn   # Svoriai
-c           # Krepšelio talpa
-v1 v2 v3 ... vn   # Verčių sąrašas
-```
-
-Pavyzdys (`testas2.txt`):
-```
-5
-10 20 15 5 25
-50
-2 3 4 5 1
+n           # Number of items
+w1 w2 w3 ... wn   # Item weights
 ```
 
-## Naudojimo Instrukcijos
-
-### Kompiliavimas
-
-Naudokite `mingw32-make` arba `make` kompiliuoti programą.
-
-### Paleidimas
-
-Programą galima paleisti dviem būdais:
-
-1. Su konkrečiu testu:
-```bash
-./main.exe testas1.txt
+### 2. 🎒 Knapsack Problem
+```
+n           # Number of items
+w1 w2 w3 ... wn   # Item weights
+c           # Backpack capacity
+v1 v2 v3 ... vn   # Item values
 ```
 
-2. Su stdin įvestimi:
-```bash
-./main.exe - < testas1.txt
+## 💻 Integration Examples
+
+### 1. 🧩 Partition Problem Integration
+```c
+#include "partition.h"
+
+int main() {
+    int weights[] = {10, 20, 15, 5, 25};
+    int n = sizeof(weights) / sizeof(weights[0]);
+    int capacity = 0;  // Automatically calculated
+
+    PartitionResult result = knapsack_or_partition(
+        weights, NULL, n, capacity, 1 /* partition mode */
+    );
+
+    printf("Difference between groups: %d\n", result.difference);
+}
 ```
 
-## Išvesties Formatas
+### 2. 🎒 Knapsack Problem Integration
+```c
+#include "partition.h"
 
-### Particijos Problema
+int main() {
+    int weights[] = {10, 20, 15, 5, 25};
+    int values[]  = {2, 3, 4, 5, 1};
+    int n = sizeof(weights) / sizeof(weights[0]);
+    int capacity = 50;
 
-Programa pateiks:
-- Artimiausią galimą padalijimą
-- Dviejų grupių sumas
-- Skirtumą tarp grupių
+    PartitionResult result = knapsack_or_partition(
+        weights, values, n, capacity, 0 /* knapsack mode */
+    );
 
-### Daikčių Krepšelio Problema
-
-Programa pateiks maksimalią galimą vertę.
-
-## Apribojimai
-
-- Maksimalus elementų skaičius: 100
-- Maksimali krepšelio talpa: 1000
-
-## Klaidos
-
-- Netinkamas failas: Programa praneš apie klaidos pobūdį
-- Per dideli skaičiai: Gali sukelti perpildymo klaidą
-
-## Dėmesio
-
-Modulis automatiškai nustato, ar tai particijos, ar krepšelio problema pagal failo formatą.
-
-## Pavyzdžiai
-
-### Particijos Problema Išvestis
-```
-Closest possible partition found!
-Subset 1 (Sum = 50): 10 20 15 
-Subset 2 (Sum = 50): 5 25
-Difference: 0
+    printf("Maximum value: %d\n", result.sum1);
+}
 ```
 
-### Krepšelio Problema Išvestis
-```
-Maximum Knapsack Value: 14
-```
+## 🚧 Limitations and Logic
 
-## Kūrėjas
+### 🔢 Maximum Number of Elements: 100
+- 📊 Dynamic programming complexity O(n²)
+- 💾 Limited memory and time consumption
+- ⏱️ Ensures solution speed up to 1 second
 
-Modulis sukurtas kaip akademinis projektas, skirtas spręsti optimizavimo uždavinius.
+### 🎒 Maximum Backpack Capacity: 1000
+- 🛡️ Prevents number overflow
+- 💾 Limits memory usage
+- 🏗️ Supports algorithm stability
+
+### 🔢 Only Positive Integers
+- 🧩 Simplifies optimization logic
+- 🌍 Fits most practical problems
+- 🚫 Avoids additional checks
+
+## 🛠️ Installation and Compilation Instructions
+
+1. 📂 Copy `partition.h` and `partition.c` to your project
+2. 🔧 Add module to compilation process
+3. 📋 Include `#include "partition.h"` in your code
+
+## 📄 License
+
+Open-source module for academic projects. 🎓
+
+## 👥 Authors
+
+Module created as an academic project to practically apply optimization algorithms. 🚀
