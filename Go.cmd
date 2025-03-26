@@ -10,21 +10,21 @@ goto :toliau
 make
 
 :toliau
-echo Running Partition Problem Tests... > result.txt
+echo Vykdomi Particijos Problemos testai... > rezultatai.txt
 
-echo Running test with testas1.txt...
-main.exe testas1.txt >> result.txt
+echo Testuojama su testas1.txt failu...
+main.exe testas1.txt >> rezultatai.txt
 
-echo Running test with testas2.txt...
-main.exe testas2.txt >> result.txt
+echo Testuojama su testas2.txt failu...
+main.exe testas2.txt >> rezultatai.txt
 
-echo Running test with testas3.txt...
-main.exe testas3.txt >> result.txt
+echo Testuojama su testas3.txt failu...
+main.exe testas3.txt >> rezultatai.txt
 
-echo Running test with testas4.txt...
-main.exe testas4.txt >> result.txt
+echo Testuojama su testas4.txt failu...
+main.exe testas4.txt >> rezultatai.txt
 
-echo Testing stdin input with testas1.txt...
-main.exe < testas1.txt >> result.txt
+echo Tikrinamas stdin įvedimas su testas1.txt failu...
+main.exe < testas1.txt >> rezultatai.txt
 
-echo All Partition Problem tests finished. Results are in result.txt.
+echo Visi Particijos Problemos testai baigti. Rezultatai saugomi rezultatai.txt faile.
